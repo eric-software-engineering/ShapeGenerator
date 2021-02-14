@@ -1,0 +1,12 @@
+<h1 id="tableLabel">Shape Generator</h1>
+
+<div class="form-group">
+  <label for="formGroupExampleInput">Please enter the shape to draw in natural language:</label>
+  <input id="formGroupExampleInput" type="text" class="form-control" [ngModel]="mymodel" (ngModelChange)="valuechange($event)" placeholder="Input" />
+
+  <div class="alert alert-info" *ngIf="errorMessage !== ''" [innerHTML]=errorMessage>  </div>
+
+  <svg width="800" height="800">
+    <g fill='transparent' stroke='black' [innerHTML]=content></g>
+  </svg>
+</div>
