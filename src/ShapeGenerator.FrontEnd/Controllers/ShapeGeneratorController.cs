@@ -14,7 +14,7 @@ namespace ShapeGenerator.FrontEnd.Controllers
         private readonly ILogger<ShapeGeneratorController> _logger;
         private readonly INaturalLanguageService naturalLanguageService;
 
-        // Center 400,400 for a 800,800 svg canvas
+        // Center (400,400) for a (800,800) svg canvas
         private const int center_x = 400;
         private const int center_y = 400;
 

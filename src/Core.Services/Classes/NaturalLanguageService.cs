@@ -12,6 +12,13 @@ namespace Core.Services.Classes
 {
     public class NaturalLanguageService : INaturalLanguageService
     {
+        /// <summary>
+        /// This method converts a string input to a 'Shape' object, centered at the 'center_x, center_y' coordinates
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="center_x"></param>
+        /// <param name="center_y"></param>
+        /// <returns></returns>
         public Shape Compile(string input, int center_x, int center_y)
         {
             if (string.IsNullOrEmpty(input))
@@ -22,7 +29,7 @@ namespace Core.Services.Classes
             var match_shape = regex_shape.Match(input);
 
             if (!match_shape.Success)
-                throw new InvalidDataException("The input must contain 'Draw a(n) <shape>'");
+                throw new InvalidDataException("The input must contain 'Draw a(n) <shape>' with");
 
             var shape_name = match_shape.Groups["shape"].Value.ToLower();
             Shape shape = null;
@@ -82,9 +89,11 @@ namespace Core.Services.Classes
             {
                 var property = shape.GetType().GetProperties().FirstOrDefault(x => ((ParserAttribute)x.GetCustomAttributes(typeof(ParserAttribute), false).FirstOrDefault())?.PropertyName == item.Groups["key"].Value);
 
+                // Check that there is a property with the given name
                 if (property == null)
                     throw new InvalidDataException($"Invalid argument '{item.Groups[0]}' for the shape '{shape_name}'");
 
+                // Check that the input can be cast into the type of the property
                 if (!item.Groups["value"].Value.TryCast(property.PropertyType, out var value))
                     throw new InvalidDataException($"Invalid argument type '{item.Groups[0]}' for the shape '{shape_name}'");
 
